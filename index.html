@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Simple Simon: The Game</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link href="simple-simon.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+<h1>Simple Simon</h1>
+<div class="main-square container">
+    <div class="squares" id="top-left-square" data-square = "1"></div>
+    <div id="top-right-square" class="squares" data-square="2"></div>
+    <div id="bottom-left-square" class="squares" data-square="3"></div>
+    <div id="bottom-right-square" class="squares" data-square="4"></div>
+</div>
+<p>
+    <marquee behavior = "alternate" width = "300">Click below to begin game</marquee>
+</p>
+<p>
+    <button type="button" class="btn btn-default" id="start-button">Start New Game</button>
+</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        "use strict";
+        $("#start-button").click(function () {
+            var randomNumber = Math.floor(Math.random()*4)+1;
+            console.log(randomNumber);
+            if (randomNumber == 1){
+                $("#top-left-square").animate({
+                    opacity: 1
+                }, 700).animate({
+                    opacity: .5
+                });
+            }
+            else if(randomNumber == 2){
+                $("#top-right-square").animate({
+                    opacity: 1
+                }, 700).animate({
+                    opacity: .5
+                });
+            }
+            else if(randomNumber == 3){
+                $("#bottom-left-square").animate({
+                    opacity: 1
+                }, 700).animate({
+                    opacity: .5
+                });
+            }
+            else
+                $("#bottom-right-square").animate({
+                    opacity: 1
+                }, 700).animate({
+                    opacity: .5
+                });
+        });
+    });
+</script>
+</body>
+</html>

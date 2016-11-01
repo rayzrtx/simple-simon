@@ -1,0 +1,54 @@
+body   {
+    height: 100%;
+    color: white;
+    background-color: black;
+}
+
+html{
+    text-align: center;
+    height: 100%;
+}
+
+.main-square{
+    position: relative;
+    border: solid;
+    border-color: darkgrey;
+    width: 50%;
+    padding-bottom: 50%;
+}
+.squares{
+    position: absolute;
+    height: 42%;
+    width: 42%;
+    opacity: .4;
+}
+
+#top-left-square{
+    background-color: red;
+    margin: 20px 10px;
+
+}
+#top-right-square{
+    background-color: blue;
+    margin: 20px 225px;
+}
+#bottom-left-square{
+    background-color: green;
+    margin: 245px 10px;
+}
+#bottom-right-square{
+    background-color: yellow;
+    margin: 245px 225px;
+}
+@keyframes start-button {
+    25% {background-color: blue;}
+    50% {background-color: red;}
+    75% {background-color: green;}
+    100% {background-color: yellow}
+}
+.btn-default{
+    animation-name: start-button;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
