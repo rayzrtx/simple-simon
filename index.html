@@ -25,10 +25,10 @@
 <h1>Simple Simon</h1>
 <div class="row">
     <div class="center-block" id="main-square">
-        <div class="squares" id="top-left-square"></div>
-        <div id="top-right-square" class="squares"></div>
-        <div id="bottom-left-square" class="squares"></div>
-        <div id="bottom-right-square" class="squares"></div>
+        <div class="squares" id="top-left-square" data-number = "1"></div>
+        <div id="top-right-square" class="squares" data-number="2"></div>
+        <div id="bottom-left-square" class="squares" data-number="3"></div>
+        <div id="bottom-right-square" class="squares" data-number="4"></div>
     </div>
 </div>
 <p id="belowgame">
@@ -42,9 +42,46 @@
     $(document).ready(function () {
         "use strict";
 
-        var randomNumber = "";
-        var roundCounter = 0;
+        var roundCounter = 1;
+        var red = document.getElementById("top-left-square");
+        var blue = document.getElementById("top-right-square");
+        var green = document.getElementById("bottom-left-square");
+        var yellow = document.getElementById("bottom-right-square");
+        red.addEventListener("click", flashRed);
+        blue.addEventListener("click", flashBlue);
+        green.addEventListener("click", flashGreen);
+        yellow.addEventListener("click", flashYellow);
+        var simonSequence = [];
+        var playersSequence = [];
 
+        function flashRed () {
+            $("#top-left-square").animate({
+                opacity: 1
+            }, 150).animate({
+                opacity: .25
+            });
+        }
+        function flashBlue () {
+            $("#top-right-square").animate({
+                opacity: 1
+            }, 150).animate({
+                opacity: .25
+            });
+        }
+        function flashGreen() {
+            $("#bottom-left-square").animate({
+                opacity: 1
+            }, 150).animate({
+                opacity: .25
+            });
+        }
+        function flashYellow () {
+            $("#bottom-right-square").animate({
+                opacity: 1
+            }, 150).animate({
+                opacity: .25
+            });
+        }
 
         $("#start-button").on("click", function (event) {
             event.preventDefault();
@@ -53,36 +90,37 @@
         });
         function newRound() {
             document.getElementById("belowgame").innerHTML = "Current Round: " + roundCounter;
-            randomNumber = Math.floor(Math.random() * 4) + 1;
+
+            var randomNumber = Math.floor(Math.random() * 4) + 1;
+            console.log("The random number is " + randomNumber);
             if (randomNumber == 1) {
-                $("#top-left-square").animate({
-                    opacity: 1
-                }, 500).animate({
-                    opacity: .25
-                });
+                flashRed();
             }
             else if (randomNumber == 2) {
-                $("#top-right-square").animate({
-                    opacity: 1
-                }, 500).animate({
-                    opacity: .25
-                });
+                flashBlue();
             }
             else if (randomNumber == 3) {
-                $("#bottom-left-square").animate({
-                    opacity: 1
-                }, 500).animate({
-                    opacity: .25
-                });
+                flashGreen();
             }
             else
-                $("#bottom-right-square").animate({
-                    opacity: 1
-                }, 500).animate({
-                    opacity: .25
-                });
+                flashYellow ();
+            roundCounter++;
+            simonSequence.push(randomNumber);
+            console.log("The simon sequence is " + simonSequence);
+             }
+        playerSequence();
+
+        function playerSequence() {
+            $(".squares").click(function () {
+                console.log("You clicked square number " + $(this).data("number"));
+                if (simonSequence == ($(this).data("number"))) {
+                    newRound();
+                }
+                else
+                    alert("You clicked the incorrect square. Game over!");
+            })
         }
-        roundCounter++;
+
     });
 </script>
 </body>
