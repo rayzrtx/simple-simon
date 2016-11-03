@@ -96,48 +96,49 @@
 
             var randomNumber = Math.floor(Math.random() * 4) + 1;
             console.log("The random number is " + randomNumber);
-            if (randomNumber == 1) {
-                flashRed();
-            }
-            else if (randomNumber == 2) {
-                flashBlue();
-            }
-            else if (randomNumber == 3) {
-                flashGreen();
-            }
-            else
-                flashYellow();
-            roundCounter++;
             simonSequence.push(randomNumber);
             console.log("The simon sequence is " + simonSequence);
             console.log("The length of simonSequence is " + simonSequence.length);
+            simonSequence.forEach(function (element) {
+                if (element == 1) {
+                    setTimeout(flashRed, 500);
+                }
+                else if (element == 2) {
+                    setTimeout(flashBlue, 500);
+                }
+                else if (element == 3) {
+                    setTimeout(flashGreen, 500);
+                }
+                else
+                    setTimeout(flashYellow, 500);
+            });
+            roundCounter++;
         }
-
-        playerSequence();
-        var i = 0;
-
-        function playerSequence() {
-            $(".squares").click(function () {
-                var currentClick = $(this).data("number");
+        var index = 0;  //counter to keep track of index number of array
+        function playerSequence(currentClick) {
                 playersSequence.push(currentClick);
                 console.log("You clicked square number " + $(this).data("number"));
                 console.log("The player sequence is " + playersSequence);
                 console.log("The length of playersSequence is " + playersSequence.length);
-                if (currentClick == simonSequence[i] && simonSequence.length - 1 == i) {
+                if (currentClick == simonSequence[index] && simonSequence.length - 1 == index) {  //if clicked square id matches the simon sequence id at index of and it is the last item in the array then go to next round
                     console.log("Correct! next round");
-                    playersSequence = [];
-                    newRound();
+                    playersSequence = [];  //reset playersSequence
+                    index = 0;
+                    setTimeout(newRound, 1500);
                 }
-                else if (currentClick == simonSequence[i] && simonSequence.length - 1 != i) {
+                else if (currentClick == simonSequence[index] && simonSequence.length - 1 != index) {  //if it is not the last item in the sequence, then keep clicking and comparing
                     console.log("Numbers match so far. Keep clicking.");
-                    i++;
-                    console.log("The value of i is " + i);
-                    playerSequence();
+                    index++;
+                    console.log("The value of i is " + index);
                 }
                 else
                     alert("You clicked the incorrect square. Game over!");
-            })
+                    //resetGame();
         }
+        $(".squares").click(function() {
+            playerSequence($(this).data("number"));
+        });
+
     });
 </script>
 </body>
