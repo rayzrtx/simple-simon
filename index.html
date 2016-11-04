@@ -53,6 +53,7 @@
         yellow.addEventListener("click", flashYellow);
         var simonSequence = [];
         var playersSequence = [];
+        var squares = $(".squares");
 
         function flashRed() {
             $("#top-left-square").animate({
@@ -95,23 +96,31 @@
             document.getElementById("belowgame").innerHTML = "Current Round: " + roundCounter;
 
             var randomNumber = Math.floor(Math.random() * 4) + 1;
+            var i = 0;
             console.log("The random number is " + randomNumber);
             simonSequence.push(randomNumber);
             console.log("The simon sequence is " + simonSequence);
             console.log("The length of simonSequence is " + simonSequence.length);
-            simonSequence.forEach(function (element) {
-                if (element == 1) {
-                    setTimeout(flashRed, 500);
+
+            var animationId = setInterval(function () {
+                if (simonSequence[i] == 1) {
+                    flashRed();
                 }
-                else if (element == 2) {
-                    setTimeout(flashBlue, 500);
+                else if (simonSequence[i] == 2) {
+                    flashBlue();
                 }
-                else if (element == 3) {
-                    setTimeout(flashGreen, 500);
+                else if (simonSequence[i] == 3) {
+                    flashGreen();
                 }
                 else
-                    setTimeout(flashYellow, 500);
-            });
+                    flashYellow();
+                i++;
+
+                if (i == simonSequence.length) {
+                    clearInterval(animationId);
+                }
+            }, 500);
+
             roundCounter++;
         }
         var index = 0;  //counter to keep track of index number of array
@@ -133,12 +142,10 @@
                 }
                 else
                     alert("You clicked the incorrect square. Game over!");
-                    //resetGame();
         }
-        $(".squares").click(function() {
+        squares.click(function() {
             playerSequence($(this).data("number"));
         });
-
     });
 </script>
 </body>
