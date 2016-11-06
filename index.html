@@ -20,133 +20,23 @@
 
 
 </head>
-
 <body>
 <h1>Simple Simon</h1>
 <div class="row">
-    <div class="center-block" id="main-square">
-        <div class="squares" id="top-left-square" data-number="1"></div>
+    <div class="center-block" id="main-square"> <!-- The game board area -->
+        <div class="squares" id="top-left-square" data-number="1"></div>    <!-- Data numbers assigned to each square to allow for comparison -->
         <div id="top-right-square" class="squares" data-number="2"></div>
         <div id="bottom-left-square" class="squares" data-number="3"></div>
         <div id="bottom-right-square" class="squares" data-number="4"></div>
     </div>
 </div>
-<p id="belowgame">
+<p id="belowgame">  <!-- Info below game board -->
     <marquee behavior="alternate" width="300">Click below to begin game</marquee>
 </p>
 <p>
     <button type="button" class="btn btn-default" id="start-button">Start New Game</button>
 </p>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        "use strict";
-
-        var roundCounter = 1;
-        var red = document.getElementById("top-left-square");
-        var blue = document.getElementById("top-right-square");
-        var green = document.getElementById("bottom-left-square");
-        var yellow = document.getElementById("bottom-right-square");
-        red.addEventListener("click", flashRed);
-        blue.addEventListener("click", flashBlue);
-        green.addEventListener("click", flashGreen);
-        yellow.addEventListener("click", flashYellow);
-        var simonSequence = [];
-        var playersSequence = [];
-        var squares = $(".squares");
-
-        function flashRed() {
-            $("#top-left-square").animate({
-                opacity: 1
-            }, 350).animate({
-                opacity: .25
-            });
-        }
-
-        function flashBlue() {
-            $("#top-right-square").animate({
-                opacity: 1
-            }, 350).animate({
-                opacity: .25
-            });
-        }
-
-        function flashGreen() {
-            $("#bottom-left-square").animate({
-                opacity: 1
-            }, 350).animate({
-                opacity: .25
-            });
-        }
-
-        function flashYellow() {
-            $("#bottom-right-square").animate({
-                opacity: 1
-            }, 350).animate({
-                opacity: .25
-            });
-        }
-
-        $("#start-button").on("click", function (event) {
-            event.preventDefault();
-            $("#start-button").hide();
-            newRound();
-        });
-        function newRound() {
-            document.getElementById("belowgame").innerHTML = "Current Round: " + roundCounter;
-
-            var randomNumber = Math.floor(Math.random() * 4) + 1;
-            var i = 0;
-            console.log("The random number is " + randomNumber);
-            simonSequence.push(randomNumber);
-            console.log("The simon sequence is " + simonSequence);
-            console.log("The length of simonSequence is " + simonSequence.length);
-
-            var animationId = setInterval(function () {
-                if (simonSequence[i] == 1) {
-                    flashRed();
-                }
-                else if (simonSequence[i] == 2) {
-                    flashBlue();
-                }
-                else if (simonSequence[i] == 3) {
-                    flashGreen();
-                }
-                else
-                    flashYellow();
-                i++;
-
-                if (i == simonSequence.length) {
-                    clearInterval(animationId);
-                }
-            }, 500);
-
-            roundCounter++;
-        }
-        var index = 0;  //counter to keep track of index number of array
-        function playerSequence(currentClick) {
-                playersSequence.push(currentClick);
-                console.log("You clicked square number " + $(this).data("number"));
-                console.log("The player sequence is " + playersSequence);
-                console.log("The length of playersSequence is " + playersSequence.length);
-                if (currentClick == simonSequence[index] && simonSequence.length - 1 == index) {  //if clicked square id matches the simon sequence id at index of and it is the last item in the array then go to next round
-                    console.log("Correct! next round");
-                    playersSequence = [];  //reset playersSequence
-                    index = 0;
-                    setTimeout(newRound, 1500);
-                }
-                else if (currentClick == simonSequence[index] && simonSequence.length - 1 != index) {  //if it is not the last item in the sequence, then keep clicking and comparing
-                    console.log("Numbers match so far. Keep clicking.");
-                    index++;
-                    console.log("The value of i is " + index);
-                }
-                else
-                    alert("You clicked the incorrect square. Game over!");
-        }
-        squares.click(function() {
-            playerSequence($(this).data("number"));
-        });
-    });
-</script>
+<script src="simple-simon.js"></script>
 </body>
 </html>
